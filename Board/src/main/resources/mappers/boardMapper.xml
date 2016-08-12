@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.imoxion.mapper.BoardMapper"> <!-- namespace를 꼭 맞게 써주어야함 -->
+	<cache />
+
+	<insert id="insertBoard" parameterType="BoardVO">
+		insert into board (m_id,b_title,b_content,b_count)
+		values(#{m_id},#{b_title},#{b_content},#{b_count})
+
+	</insert>
+
+
+	<select id="getList" resultType="BoardVO">
+		select * from board;
+
+	</select>
+
+	<select id="getBoard" parameterType="int" resultType="BoardVO">
+		select * from board where b_num = #{b_num};
+
+
+	</select>
+
+	<delete id="delBoard" parameterType="int">
+		delete from board where b_num= #{b_num};
+
+	</delete>
+
+	<update id="boardUpdate" parameterType="BoardVO">
+		update board set b_title = #{b_title}, b_content = #{b_content} where b_num
+		= #{b_num};
+	</update>
+
+
+	<update id="updateCount" parameterType="BoardVO">
+		update board set b_count = #{b_count} where b_num = #{b_num};
+	</update>
+
+	<insert id="insertReply" parameterType="ReplyVO">
+		insert into reply (b_num,r_level,r_text,r_group,r_step)
+		values(#{b_num},#{r_level},#{r_text},#{r_group},#{r_step})
+
+	</insert>
+	
+	<select id="getreply" parameterType="int" resultType="ReplyVO">
+	
+	select * from reply where b_num = #{b_num};
+	
+	</select>
+	
+	<select id="getMaxGroup" parameterType="int" resultType="Integer">
+	
+	select max(r_group) from reply where b_num = #{b_num};
+	</select>
+</mapper>
