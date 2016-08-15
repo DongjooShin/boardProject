@@ -27,8 +27,11 @@
 
 			<c:forEach var="list" items="${list }" varStatus="loop">
 				<tr height="30" class="tdSpace">
-					<td width="50">${list.b_num }</td>
-					<td width="300"><a href="/board/ReadBoard?b_num=${list.b_num }">${list.b_title }</a></td>
+					<td width="50"><c:if test="${list.b_depth ==0 }">${list.b_num }</c:if></td>
+					<td width="300">
+					<c:forEach begin="1" end="${list.b_depth }" step="1">&nbsp;&nbsp;&nbsp;</c:forEach> 
+					
+					<a href="/board/ReadBoard?b_num=${list.b_num }"><c:if test="${list.b_depth !=0 }">ㄴ</c:if>${list.b_title }</a></td>
 					<td width="100">${list.m_id }</td>
 					<td width="100"><fmt:formatDate value="${list.b_date }" type="both"/> </td>
 					<td width="50">${list.b_count }</td>
@@ -37,6 +40,8 @@
 			</c:forEach>
 		</table>
 	</div>
+			
+			 <c:forEach var="page" begin="${page.startBlock }" end="${page.endBlock }" step="1"> <a href="/board/listAll?cpage=${page }">${page }</a></c:forEach> 
 	
 	<br>
 	<br>

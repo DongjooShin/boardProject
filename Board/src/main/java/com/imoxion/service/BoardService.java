@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.imoxion.domain.BoardVO;
+import com.imoxion.domain.Crieria;
 import com.imoxion.domain.ReplyVO;
 import com.imoxion.mapper.BoardMapper;
 import com.imoxion.persistence.BoardDao;
@@ -20,12 +21,14 @@ public class BoardService {
 		this.boardDao = boardDao;
 	}
 
-	public void insertBoardService(BoardVO board) {
-		boardDao.insertBoard(board);
+	public int insertBoardService(BoardVO board) {
+		return boardDao.insertBoard(board);
 	}
 
-	public List<BoardVO> getListService() {
-		return boardDao.getList();
+	public List<BoardVO> getListService(Crieria crieria) {
+		
+		
+		return boardDao.getList(crieria);
 	}
 
 	public BoardVO getBoardService(int b_num) {
@@ -56,9 +59,34 @@ public class BoardService {
 		boardDao.insertReply(reply);
 	}
 
-	public List<ReplyVO> getreplyService(int b_num) {
+/*	public List<ReplyVO> getreplyService(int b_num) {
 
 		return boardDao.getreply(b_num);
+	}*/
+
+	public List<BoardVO> getOverListService(BoardVO board) {
+		
+		return boardDao.getOverList(board);
+	}
+
+	public void updateStepService(BoardVO board) {
+		boardDao.updateStep(board);
+		
+	}
+
+	public Crieria getPaging(int rowPerPage,int cpage) {
+		int totalCount = boardDao.listTotalCount();
+		Crieria crieria = new Crieria();
+		crieria.setTotalRow(totalCount);
+		crieria.setRowPerPage(rowPerPage);
+		crieria.setCpage(cpage);
+		crieria.calPaging();
+		
+		System.out.println(crieria.toString());
+		
+		
+		
+		return crieria;
 	}
 
 }

@@ -8,52 +8,64 @@
 	<cache />
 
 	<insert id="insertBoard" parameterType="BoardVO">
-		insert into board (m_id,b_title,b_content,b_count)
-		values(#{m_id},#{b_title},#{b_content},#{b_count})
+		insert into board
+		(m_id,b_title,b_content,b_count,b_group,b_step,b_depth)
+		values(#{m_id},#{b_title},#{b_content},#{b_count},#{b_group},#{b_step},#{b_depth})
 
 	</insert>
 
+	<select id="getGroupNum" resultType="int">
 
-	<select id="getList" resultType="BoardVO">
-		select * from board;
+		select max(b_num) from board;
 
 	</select>
 
+	<select id="getList" parameterType="Crieria" resultType="BoardVO">
+		select * from board order by b_group, b_step limit #{startRow} , #{endRow};
+
+	</select>
+
+	<update id="insertGroupNumBoard">
+
+		update board set b_group = #{getGroupNum} where b_num =#{getGroupNum};
+	</update>
+
+	<select id="getOverList" parameterType="BoardVO" resultType="BoardVO">
+
+		select * from board where b_group = #{b_group} and b_step > #{b_step};
+	</select>
+
+	<update id="updateStep" parameterType="BoardVO">
+	 	update board set b_step = #{b_step} where b_num =#{b_num};
+	</update>
+
 	<select id="getBoard" parameterType="int" resultType="BoardVO">
-		select * from board where b_num = #{b_num};
+		select *
+		from board where b_num = #{b_num};
 
 
 	</select>
 
 	<delete id="delBoard" parameterType="int">
-		delete from board where b_num= #{b_num};
+		delete from board where
+		b_num= #{b_num};
 
 	</delete>
 
 	<update id="boardUpdate" parameterType="BoardVO">
-		update board set b_title = #{b_title}, b_content = #{b_content} where b_num
+		update board set b_title
+		= #{b_title}, b_content = #{b_content} where b_num
 		= #{b_num};
 	</update>
 
 
 	<update id="updateCount" parameterType="BoardVO">
-		update board set b_count = #{b_count} where b_num = #{b_num};
+		update board set b_count
+		= #{b_count} where b_num = #{b_num};
 	</update>
 
-	<insert id="insertReply" parameterType="ReplyVO">
-		insert into reply (b_num,r_level,r_text,r_group,r_step)
-		values(#{b_num},#{r_level},#{r_text},#{r_group},#{r_step})
 
-	</insert>
-	
-	<select id="getreply" parameterType="int" resultType="ReplyVO">
-	
-	select * from reply where b_num = #{b_num};
-	
-	</select>
-	
-	<select id="getMaxGroup" parameterType="int" resultType="Integer">
-	
-	select max(r_group) from reply where b_num = #{b_num};
+	<select id="listTotalCount" resultType="Integer">
+		select count(b_num) from board;
 	</select>
 </mapper>

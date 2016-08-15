@@ -16,7 +16,7 @@
 <script type="text/javascript">
 	function goList() {
 
-		location.href = "/board/listAll";
+		location.href = "/board/listAll?cpage=1";
 	}
 
 	function delBoard() {
@@ -29,8 +29,13 @@
 		location.href = "/board/ModifyBoard?b_num=${board.b_num }";
 	}
 	
+	
+	
+	function answer() {
+		location.href = "/board/answerBoard?b_num=${board.b_num }";
+	}
 
-
+ 
 	
 		function secondReply(r_num) {
 		
@@ -39,8 +44,7 @@
 		var replyBox = '<tr height="30">';
 		replyBox += '<td colspan="4"><textarea rows="4" cols="85" name="r_text" style="width: 99%;"></textarea></td></tr>';
 		replyBox += '<tr height="30" class="tdSpace"> <td colspan="4"><input type="submit" value="등록"></td> </tr>';
-			
-		if()
+		
 		$('#secondReply'+r_num).append(replyBox);
 		
 		
@@ -84,7 +88,7 @@
 				<td colspan="4"><input type="button" value="리스트"
 					onclick="goList()"> <input type="button" value="수정"
 					onclick="ModifyBoard()"> <input type="button" value="삭제"
-					onclick="delBoard()"></td>
+					onclick="delBoard()"><input type="button" value="답변" onclick="answer()"></td>
 			</tr>
 
 		</table>

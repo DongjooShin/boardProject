@@ -11,8 +11,29 @@ public class BoardVO implements Serializable {
 	private String b_content;
 	private int b_count;
 	private Date b_date;
+	private int b_group;
+	private int b_step;
+	private int b_depth;
 	
 	
+	public int getB_group() {
+		return b_group;
+	}
+	public void setB_group(int b_group) {
+		this.b_group = b_group;
+	}
+	public int getB_step() {
+		return b_step;
+	}
+	public void setB_step(int b_step) {
+		this.b_step = b_step;
+	}
+	public int getB_depth() {
+		return b_depth;
+	}
+	public void setB_depth(int b_depth) {
+		this.b_depth = b_depth;
+	}
 	public int getB_num() {
 		return b_num;
 	}
@@ -49,5 +70,13 @@ public class BoardVO implements Serializable {
 	public void setB_date(Date b_date) {
 		this.b_date = b_date;
 	}
+	@Override
+	public String toString() {
+		return "BoardVO [b_num=" + b_num + ", m_id=" + m_id + ", b_title=" + b_title + ", b_content=" + b_content
+				+ ", b_count=" + b_count + ", b_date=" + b_date + ", b_group=" + b_group + ", b_step=" + b_step
+				+ ", b_depth=" + b_depth + "]";
+	}
 
+	
+	
 }
